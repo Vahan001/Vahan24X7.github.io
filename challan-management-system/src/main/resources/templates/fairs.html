@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Fair Management System</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<style>
+	.delete {
+	  background-color: Red;
+	  border: none;
+	  color: white;
+	  padding: 12px 16px;
+	  font-size: 16px;
+	  cursor: pointer;
+	  border-radius: 100px;
+	}
+	
+	/* Darker background on mouse-over */
+	.delete:hover {
+	  background-color: #FF073A;
+	}
+	.edit {
+	  background-color: DodgerBlue;
+	  border: none;
+	  color: white;
+	  padding: 12px 16px;
+	  font-size: 16px;
+	  cursor: pointer;
+	  border-radius: 100px;
+	}
+	
+	/* Darker background on mouse-over */
+	.edit:hover {
+	  background-color: RoyalBlue;
+	}
+</style>
+</head>
+<body>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+  <!-- Brand -->
+  <a class="navbar-brand" th:href="@{/challans}">Vahan 24X7</a>
+
+  <!-- Toggler/collapsibe Button -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <!-- Navbar links -->
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/challans}">Challan Management</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/fairs}">Fair Management</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" th:href="@{/teams}">Our Team</a>
+      </li>
+    </ul>
+  </div>
+  <div class = "row">
+			<div class = "col-lg-3">
+				<a th:href = "@{/fairs/new}" class="btn btn-secondary btn-rounded"> Add Fines</a>
+			</div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<!-- Sign Out Button -->
+			<div class = "col-lg-3">
+				<a th:href = "@{/}" class="btn btn-secondary btn-rounded"> Log Out</a>
+			</div>
+		</div>
+</nav><br><br><br>
+
+	<div class ="container">
+		<div class = "row">
+			<h1> List of Fine Amounts </h1>
+		</div>
+		<table class = "table table-striped table-bordered">
+			<thead class = "table-dark">
+				<tr>
+					<th> Reason</th>
+					<th> Fine Amount(In Rs.)</th>
+					<th> Actions </th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each = "fair: ${fairs}">
+					<td th:text = "${fair.fineCause}"></td>
+					<td th:text = "${fair.Amount}"></td>
+					<td>
+						<a th:href = "@{/fairs/edit/{id}(id=${fair.id})}"><button class="edit"><i class="fa fa-pencil"></i> Update</button></a>
+						
+						<a th:href = "@{/fairs/{id}(id=${fair.id})}"><button class="delete"><i class="fa fa-trash"></i> Delete</button></a>
+						 
+					</td>
+				</tr>
+			</tbody>
+		
+		</table>
+		
+	</div>
+	
+	<div class="container">
+	<p>Total Fairs: [[${totalItems}]]</p>
+<nav aria-label="Page navigation example">
+			<ul class="pagination">
+				<li th:if="${CurrentPage !=0}" class="pagess-item"><a class="pages-link" th:href="@{'/pages/'+${CurrentPage-1}}">Previous</a></li>
+
+
+				<li th:each="i:${#numbers.sequence(1,totalPage)}"  th:classappend="${CurrentPage==i-1 ? 'active' : '' }"  class="pages-item">
+				
+				<a class="pages-link" th:href="@{'/pages/'+${i-1}}">[[${i}]]</a>
+				
+				
+				</li>
+
+				<li th:if="${CurrentPage+1!=totalPage}" class="pages-item"><a class="pages-link" th:href="@{'/pages/'+${CurrentPage+1}}">Next</a></li>
+			</ul>
+		</nav>
+</div>	
+<footer class="bg-light text-center text-lg-start">
+  <!-- Copyright -->
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    © 2020 Copyright:
+    <a class="text-dark" href="#">GroupA- Vahan24X7</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+</body>
+</html>
